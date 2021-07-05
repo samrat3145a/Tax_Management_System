@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+            <li class="breadcrumb-item"><a href="{% url 'training_candidate_master' %}">Create New Entry</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'view_query_candidate_master' %}">View Candidates</a></li>
+        </ol>
+    </nav>
+    <!--    Navs End     -->
+
+    <div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Training Candidate Master</h2>
+    </div>
+
+    <div class="container p-5 mb-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h3>Create New Entry</h3>
+
+        <form class="needs-validation" method="POST" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-12"><label for="name">Candidate ID:</label>
+                    <select class="form-control" id="sel1" placeholder="Enter Course Id.." name="Candidate_ID">
+                        {% for canid in canids %}
+                        <option value="{{canid.Candidate_ID}}">{{canid.Candidate_name}} ID:{{canid.Candidate_ID}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">Please enter a username</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><label for="name">Candidate Name:</label><input type="text" class="form-control"
+                        placeholder="Enter Candidate Name" name="canname" required />
+                    <div class="invalid-feedback">Please enter a username</div>
+                </div>
+                <div class="col-md-3"><label for="name">Contact No: </label><input type="text" class="form-control"
+                        placeholder="Enter Candidate Contact No" name="ContactNo" required />
+                    <div class="invalid-feedback">Please enter a contact no.</div>
+                </div>
+                <div class="col-md-6"><label for="name">Email: </label><input type="text" class="form-control"
+                        placeholder="Enter Candidate Email" name="email" required />
+                    <div class="invalid-feedback">Please enter a E-mail.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><label for="name">Qualification: </label><input type="text" class="form-control"
+                        placeholder="Enter Qualification..." name="qualification" required />
+                    <div class="invalid-feedback">Please enter a qualification.</div>
+                </div>
+                <div class="col-md-3"><label for="name">Id Proof Name: </label><input type="text" class="form-control"
+                        placeholder="Enter Id Proof Name..." name="idProofName" required />
+                    <div class="invalid-feedback">Please enter a Id Proof Name.</div>
+                </div>
+                <div class="col-md-6"><label for="name">Id Proof No: </label><input type="text" class="form-control"
+                        placeholder="Enter Id Proof No..." name="idProofNo" required />
+                    <div class="invalid-feedback">Please enter a Id Proof No.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><label for="name">Date of Birth: </label><input class="form-control" id="date"
+                        type="date" name="dateOfBirth" placeholder="Enter the DOB..." required>
+                    <div class="invalid-feedback">Please choose a DOB.</div>
+                </div>
+                <div class="col-md-3"><label for="Course_ID_id">Course Id: </label>
+                    <select class="form-control" id="sel1" placeholder="Enter Course Id.." name="Course_ID">
+                        {% for courseid in courseids %}
+                        <option value="{{courseid.Course_ID}}">{{courseid.Course_Name}} ID:{{courseid.Course_ID}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">Please enter a course Id.</div>
+                </div>
+                <div class="col-md-3"><label for="name">Placement: </label><input type="text" class="form-control"
+                        placeholder="Enter Placement..." name="Placement" required />
+                    <div class="invalid-feedback">Please enter a Placement.</div>
+                </div>
+                <div class="col-md-3"><label for="name">Caller Id: </label><input type="number" class="form-control"
+                        placeholder="Enter Caller Id..." name="callId" required />
+                    <div class="invalid-feedback">Please enter a caller Id.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><label for="Address">Address: </label><input type="text" class="form-control"
+                        placeholder="Enter Address..." name="Address" required />
+                    <div class="invalid-feedback">Please enter a Address.</div>
+                </div>
+                <div class="col-md-3"><label for="parentName">Parent Name: </label><input type="text"
+                        class="form-control" placeholder="Enter Parent Name" name="parentName" required />
+                    <div class="invalid-feedback">Please enter a Parent Name.</div>
+                </div>
+                <div class="col-md-3"><label for="offerId">Offer Id: </label><input type="number" class="form-control"
+                        placeholder="Enter Offer Id." name="offerId" required />
+                    <div class="invalid-feedback">Please enter a offer Id.</div>
+                </div>
+                <div class="col-md-3"><label for="dateOfReg">Date of Register: </label><input class="form-control"
+                        id="date" type="date" name="dateOfReg" placeholder="Enter the Registration..." required>
+                    <div class="invalid-feedback">Please choose a Date Of Reg.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><label for="Status">Status: </label><input type="text" class="form-control"
+                        placeholder="Enter Status..." name="Status" required />
+                    <div class="invalid-feedback">Please enter a Status.</div>
+                </div>
+                <div class="col-md-3"><label for="ParentCont">Parent Cont: </label><input type="text"
+                        class="form-control" placeholder="Enter Parent Cont.." name="ParentCont" required />
+                    <div class="invalid-feedback">Please enter a Parent Cont.</div>
+                </div>
+                <div class="col-md-3"><label for="paymentDueDay">Payment Due Date:</label><input class="form-control"
+                        id="date" type="date" name="paymentDueDay" placeholder="Enter the Registration..." required>
+                    <div class="invalid-feedback">Please choose a Due Date.</div>
+                </div>
+                <div class="col-md-3"><label for="noOfInstallments">No of installments: </label><input type="number"
+                        class="form-control" placeholder="Enter No of installments..." name="noOfInstallments"
+                        required />
+                    <div class="invalid-feedback">Please choose a number.</div>
+                </div>
+            </div>
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info mt-2" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <input type="submit" class="btn btn-primary btn-block mt-3" value="Insert Record">
+
+
+        </form>
+    </div>
+</div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+{% endblock %}

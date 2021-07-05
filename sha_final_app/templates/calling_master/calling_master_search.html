@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!--    Navs     -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb pl-5">
+      <li class="breadcrumb-item"><a href="{% url 'calling_master_form' %}">Create New Entry</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'view_query_callmast' %}">View Calling Details</a></li>
+    </ol>
+</nav>
+<!--    Navs End     -->
+
+<div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+    <h2 class="pl-5 pt-2">Calling Master</h2>
+</div>
+
+<div class="container p-5 mb-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+    <h2>Search</h2>
+    <form method="GET" action="/calling-master/result/">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col"><label for="name">Candidate name</label>
+                <select class="form-control" id="name" name="abc" required>
+                    <option selected disabled value="">Choose...</option>
+                    {% for k in kbc %}
+                    <option>{{k.Candidate_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary btn-block mt-2" value="Search">
+    </form>
+</div>
+{% if mfind %}
+<div class="container p-5 mt-3" style="background-color:#eceff1; border-radius: 25px;">
+    <h2>Search Result</h2>
+    <table class="table table-bordered table-hover table-responsive" style="white-space: nowrap;">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Options</th>
+                <th scope="col">Candidate_id</th>
+                <th scope="col">Candidate_name</th>
+                <th scope="col">Candidate_number</th>
+                <th scope="col">Email_id</th>
+                <th scope="col">Interested_area</th>
+                <th scope="col">Source_name</th>
+                <th scope="col">Receiving_date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in mfind %}
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'call_mast_delete' m.pk %}"><button class="btn btn-danger btn-sm">Delete</button>
+                    <a href="{% url 'update_calling_master' m.pk %}"><button class="btn btn-warning btn-sm">Update</button>
+                </th>
+                <th scope="col">{{m.Candidate_ID}}</th>
+                <th scope="col">{{m.Candidate_name}}</th>
+                <th scope="col">{{m.Contact_number}}</th>
+                <th scope="col">{{m.Email_id}}</th>
+                <th scope="col">{{m.Interested_area}}</th>
+                <th scope="col">{{m.Source_name.Source_name}}</th>
+                <th scope="col">{{m.Receiving_date}}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success mt-2" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+            <li class="breadcrumb-item"><a href="{% url 'training_candidate_master' %}">Create New Entry</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'view_query_candidate_master' %}">View Candidates</a></li>
+        </ol>
+    </nav>
+    <!--    Navs End     -->
+
+    <div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Training Candidate Master</h2>
+    </div>
+
+    <div class="container p-5 mb-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h3>Search</h3>
+        <form method="GET" action="/training-candidate-master/result/">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col"><label for="name">Candidate Name:</label><input type="text" name="key"
+                        class="form-control" placeholder="Enter Candidate Name" />
+                <input type="submit" class="btn btn-primary btn-block mt-3" value="Search">
+            </div>
+            </div>
+        </form>
+    </div>
+    {% if allCandidates %}
+    <div class="container p-5 mt-3" style="background-color:#eceff1; border-radius: 25px;">
+        <h3>List of Candidates</h3>
+        <table class="table table-bordered table-hover table-responsive" style="white-space: nowrap;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Response</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Placement</th>
+                    <th scope="col">Contact No</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Qualification</th>
+                    <th scope="col">Id Proof Name</th>
+                    <th scope="col">Id Proof No</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Course Enrolled</th>
+                    <th scope="col">call Id</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Parent Name</th>
+                    <th scope="col">Offer Id</th>
+                    <th scope="col">Parent Cont</th>
+                    <th scope="col">Date of Register</th>
+                    <th scope="col">Payment Due Date</th>
+                    <th scope="col">No of installments</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for Candidate in allCandidates %}
+                <tr>
+                    <th scope="row"><a href="{% url 'delete_candidate_master' Candidate.pk %}"><button class="btn btn-danger btn-sm">Delete</button></a>
+                        <a href="{% url 'update_candidate_master' Candidate.pk %}"><button class="btn btn-warning btn-sm">Update</button></a></th>
+                    <th scope="row">{{ Candidate.canname }}</th>
+                    <td class="bg-secondary border border-dark">{{ Candidate.Status }}</td>
+                    <td class="bg-secondary border border-dark">{{ Candidate.Placement }}</td>
+                    <td>{{ Candidate.ContactNo }}</td>
+                    <td>{{ Candidate.email }}</td>
+                    <td>{{ Candidate.qualification }}</td>
+                    <td>{{ Candidate.idProofName }}</td>
+                    <td>{{ Candidate.idProofNo }}</td>
+                    <td>{{ Candidate.dateOfBirth }}</td>
+                    <td>{{ Candidate.Course_ID.Course_Name }}</td>
+                    <td>{{ Candidate.callId }}</td>
+                    <td>{{ Candidate.Address }}</td>
+                    <td>{{ Candidate.parentName }}</td>
+                    <td>{{ Candidate.offerId }}</td>
+                    <td>{{ Candidate.ParentCont }}</td>
+                    <td>{{ Candidate.dateOfReg }}</td>
+                    <td>{{ Candidate.paymentDueDay }}</td>
+                    <td>{{ Candidate.noOfInstallments }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

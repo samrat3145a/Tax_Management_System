@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!--    Navs     -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb pl-5">
+      <li class="breadcrumb-item"><a href="{% url 'calling_master_form' %}">Create New Entry</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'view_query_callmast' %}">View Calling Details</a></li>
+    </ol>
+</nav>
+<!--    Navs End     -->
+<div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+    <h2 class="pl-5 pt-2">Calling Master</h2>
+</div>
+
+<div class="container p-5 mb-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+    <h2>Create New Entry</h2>
+    <hr>
+    
+    <form class="needs-validation" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="container" style="padding-bottom:30px; ">
+            Generated Candidate ID: {{ canid }}
+        </div>
+        <div class="form-row">                   
+            <div class="form-group col-md-12 pr-md-5">
+                <label for="candidate_name">Candidate Name</label>
+                <input class="form-control" id="candidate_name" type="text" name="Candidate_name" placeholder="Enter Candidate Name" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-6 pr-md-5">
+                <label for="contact_number">Contact Number</label>
+                <input class="form-control" id="contact_number" type="number" name="Contact_number" placeholder="Enter Contact Number" required>
+            </div>
+            <div class="form-group col-md-6 pr-md-5">
+                <label for="email-id">Email Id</label>
+                <input class="form-control" id="email-id" type="email" name="Email_id" placeholder="Enter Email Address" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-6 pr-md-5">
+                <label for="intrested_area">Intrested Area</label>
+                <select class="form-control" id="intrested_area" name="Interested_area" required>
+                    <option value="training">Training</option>
+                <option value="loan">Loan</option>
+                </select>
+                </div>
+            <div class="form-group col-md-6 pr-md-5">
+                <label for="sel1">Source Id</label>
+                <select class="form-control" id="sel1" placeholder="Enter Source Id.." name="Source_name">
+                    {% for s_id in s_ids %}
+                    <option value="{{s_id.Source_ID}}">{{s_id.Source_name}} ID:{{s_id.Source_ID}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-12 pr-md-5">
+                <label for="date_of_received">Date of Received</label>
+                <input class="form-control" id="date_of_received" type="date" name="Receiving_date" required>
+            </div>                       
+        </div>
+        <input type="submit" class="btn btn-primary btn-block mt-3" value="Insert Record">
+        
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success mt-2" role="alert">
+            {{ message }}{{canid}}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </form>
+</div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+    </script>
+
+{% endblock %}

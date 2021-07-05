@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+            <li class="breadcrumb-item"><a href="{% url 'course_master_new' %}">Create New Course</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'view_query_course' %}">View Courses</a></li>
+        </ol>
+    </nav>
+    <!--    Navs End     -->
+
+    <div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Courses</h2>
+    </div>
+
+    <div class="container p-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h5>SEARCH COURSE</h5>
+        <br>
+        <form method="GET" action="/course-master/result/">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <label for="name">Course Name:</label><input type="text" name="key" class="form-control"
+                        placeholder="Enter Course Name..." />
+                    <input type="submit" class="btn btn-primary btn-block  mt-3" value="Search">
+                </div>
+            </div>
+        </form>
+    </div>
+    {% if courses %}
+    <div class="container p-5 mt-3" style="background-color:#eceff1; border-radius: 25px;">
+        <h3>List of Courses</h3>
+        <table class="table table-bordered table-hover" style="white-space: nowrap;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Response</th>
+                    <th scope="col">Course ID</th>
+                    <th scope="col">Course name</th>
+                    <th scope="col">Fees</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <th scope="row">
+                        <a href="{% url 'delete_course' course.pk %}"><button class="btn btn-danger btn-sm">Delete</button></a>
+                        <a href="{% url 'update_course' course.pk %}"><button class="btn btn-warning btn-sm">Update</button></a>
+                    </th>
+                    <th scope="row">{{ course.Course_ID }}</th>
+                    <td>{{ course.Course_Name }}</td>
+                    <td>{{ course.Fees }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

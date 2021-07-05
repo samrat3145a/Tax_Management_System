@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+          <li class="breadcrumb-item"><a href="{% url 'source_master_new' %}">Create New Sources</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'view_query_source' %}">View Sources</a></li>
+        </ol>
+    </nav>
+    <!--    Navs End     -->
+
+    <div class="container py-3 mt-5" style="background-color:#2196f3; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Sources</h2>
+    </div>
+
+    <div class="container p-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h5>SEARCH SOURCES</h5>
+        <br>
+        <form method="GET" action="/source-master/result/">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col"><label for="name">Sources Name:</label><input type="text" name="key" class="form-control" placeholder="Enter Sources Name..."/>
+            <input type="submit" class="btn btn-primary btn-block mt-3" value="Search"></div>
+        </div>
+        </form>
+    </div>
+    {% if sources %}
+    <div class="container p-5 mt-3" style="background-color:#eceff1; border-radius: 25px;">
+        <h3>List of Sources</h3>
+        <table class="table table-bordered table-hover" style="white-space: nowrap;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Response</th>
+                    <th scope="col">Source Name</th>
+                    <th scope="col">R.P.M</th>
+                    <th scope="col">Contact No.</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for source in sources %}
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'delete_source' source.pk %}"><button class="btn btn-danger btn-sm">Delete</button></a>
+                    <a href="{% url 'update_source' source.pk %}"><button class="btn btn-warning btn-sm">Edit</button></a>
+                </th>
+                <th scope="row">{{ source.Source_name }}</th>
+                <td>{{ source.Rate_per_candidate }}</td>
+                <td>{{ source.Contact_no }}</td>
+                <td>{{ source.City }}</td>
+                <td>{{ source.State }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    {% endif %}
+{% endblock %}

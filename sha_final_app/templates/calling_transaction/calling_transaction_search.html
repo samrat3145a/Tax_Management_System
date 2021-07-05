@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<!--    Navs     -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb pl-5">
+        <li class="breadcrumb-item"><a href="{% url 'calling_transaction_form' %}">Create Transaction</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'view_query_calltrans' %}">View Transaction Details</a></li>
+    </ol>
+</nav>
+<!--    Navs End     -->
+
+<div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+    <h2 class="pl-5 pt-2">Calling Transaction</h2>
+</div>
+
+<div class="container p-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+    <h4>Search</h4>
+    <form method="GET" action="/calling-transaction/result/">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col"><label for="name">Transaction ID</label>
+                <input type="text" name="key" class="form-control"
+                    placeholder="Enter the generated transaction id" /><br />
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary btn-block" value="Search">
+    </form>
+</div>
+{% if find %}
+<div class="container p-5 mt-3" style="background-color:#eceff1; border-radius: 25px;">
+    <h3>List of Candidates</h3>
+    <table class="table table-bordered table-hover table-responsive" style="white-space: nowrap;">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Option</th>
+                <th scope="col">Transaction ID</th>
+                <th scope="col">Candidate ID</th>
+                <th scope="col">Feedback</th>
+                <th scope="col">Next Call Date</th>
+                <th scope="col">Next Call Time</th>
+                <th scope="col">Cofirm</th>
+                <th scope="col">Call Date</th>
+                <th scope="col">Call Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in find %}
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'call_trans_delete' f.pk %}"><button class="btn btn-danger btn-sm">Delete</button>
+                </th>
+                <th scope="row">{{f.Transaction_id}}</th>
+                <td>{{f.Candidate_ID.Candidate_ID}}</td>
+                <td>{{f.Feedback}}</td>
+                <td>{{f.Next_Call_Date}}</td>
+                <td>{{f.Next_Call_Time}}</td>
+                <td>{{f.Cofirm}}</td>
+                <td>{{f.Call_Date}}</td>
+                <td>{{f.Call_Time}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success mt-2" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb pl-5">
+        <li class="breadcrumb-item"><a href="{% url 'training_transaction_form' %}">Create New Entry</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'view_query_trainingtrans' %}">View Transaction Details</a></li>
+    </ol>
+</nav>
+
+<div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+    <h2 class="pl-5 pt-2">Training Candidate Transactions</h2>
+</div>
+
+<div class="container p-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h3>Search</h3>
+        <form method="GET" action="/training-transaction/result/">
+        {% csrf_token %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Candidate Username</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" name="go"
+                                placeholder="Enter Transaction ID..." autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" value="Search">
+            </div>
+        </form>
+    </div>
+    {% if aja %}
+    <div class="container p-5 mt-3" style="background-color:#eceff1; border-radius: 25px;">
+        <h3>List of Candidates</h3>
+        <table class="table table-bordered table-hover table-responsive" style="white-space: nowrap;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Candidate_name</th>
+                    <th scope="col">Date_of_transaction</th>
+                    <th scope="col">Course_id</th>
+                    <th scope="col">Course_amount</th>
+                    <th scope="col">Payment_mode</th>
+                    <th scope="col">Amount_deposited</th>
+                    <th scope="col">Bank_transaction_id</th>
+                    <th scope="col">Bank_account_number</th>
+                    <th scope="col">Cheque_number</th>
+                    <th scope="col">UPI_Ewallet_id</th>
+                    <th scope="col">Warning_level</th>
+                    <th scope="col">Payment_status</th>
+                    <th scope="col">Reason_for_nonPayment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in aja %}
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'training_trans_delete' a.pk %}"><button class="btn btn-danger btn-sm">Delete</button>
+                </th>
+                <th scope="row">{{a.Candidate_name}}</th>
+                <td>{{a.Date_of_transaction}}</td>
+                <td>{{a.Course_id}}</td>
+                <td>{{a.Course_amount}}</td>
+                <td>{{a.Payment_mode}}</td>
+                <td>{{a.Amount_deposited}}</td>
+                <td>{{a.Bank_transaction_id}}</td>
+                <td>{{a.Bank_account_number}}</td>
+                <td>{{a.Bank_account_number}}</td>
+                <td>{{a.Cheque_number}}</td>
+                <td>{{a.UPI_Ewallet_id}}</td>
+                <td>{{a.Warning_level}}</td>
+                <td>{{a.Payment_status}}</td>
+                <td>{{a.Reason_for_nonPayment}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success mt-2" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

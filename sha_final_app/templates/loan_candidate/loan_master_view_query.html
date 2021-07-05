@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+            <li class="breadcrumb-item"><a href="{% url 'loan_candidate_master' %}">Create New Entry</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'loan_view_query_candidate_master' %}">View Candidates</a></li>
+        </ol>
+    </nav>
+    <!--    Navs End     -->
+
+    <div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Loan Candidate Master</h2>
+    </div>
+
+    <div class="container p-5 mb-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h3>Search</h3>
+        <form method="GET" action="/loan-candidate-master/result/">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col"><label for="candidate_name">Candidate Name:</label><input type="text" name="key"
+                                                                                           class="form-control" placeholder="Enter Candidate Name" />
+                    <input type="submit" id="candidate_name" class="btn btn-primary btn-block mt-3" value="Search">
+                </div>
+            </div>
+        </form>
+    </div>
+    {% if allloanCandidates %}
+    <div class="container p-5 mt-3" style="background-color:#eceff1; border-radius: 25px;">
+        <h3>List of Candidates</h3>
+        <table class="table table-bordered table-hover table-responsive" style="white-space: nowrap;">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Response</th>
+                <th scope="col">Loan ID</th>
+                <th scope="col">Candidate Name</th>
+                <th scope="col">Contact No</th>
+                <th scope="col">Email</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Occupation</th>
+                <th scope="col">idProofName</th>
+                <th scope="col">ID Proof No</th>
+                <th scope="col">inputCity</th>
+                <th scope="col">state</th>
+                <th scope="col">zip</th>
+                <th scope="col">country</th>
+                <th scope="col">photograph</th>
+                <th scope="col">medicalrecord</th>
+                <th scope="col">bankname	</th>
+                <th scope="col">bankrecord</th>
+                <th scope="col">accountholdername</th>
+                <th scope="col">accountno</th>
+                <th scope="col">ifsccode</th>
+                <th scope="col">purpose</th>
+                <th scope="col">LoanAmount</th>
+                <th scope="col">RateofInt</th>
+                <th scope="col">Dateofsaction</th>
+                <th scope="col">Dateofdisbursment</th>
+                <th scope="col">Security</th>
+                <th scope="col">NoofInstalment</th>
+                <th scope="col">EMIlimit</th>
+                <th scope="col">NoofFamilymembers</th>
+                <th scope="col">MonthlyFamilyEarnings</th>
+                <th scope="col">dateOfReg</th>
+                <th scope="col">Authorised_by</th>
+                <th scope="col">Candidate_ID</th>
+                <th scope="col">Offer_ID</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            {% for Candidate in allloanCandidates %}
+            <tr>
+                <th scope="row"><a href="{% url 'loan_delete_candidate_master' Candidate.pk %}"><button class="btn btn-danger btn-sm">Delete</button></a>
+                    <a href="{% url 'loan_update_candidate_master' Candidate.pk %}"><button class="btn btn-warning btn-sm">Update</button></a></th>
+                <td >{{ Candidate.Loan_ID }}</td>
+                <th scope="row">{{ Candidate.canname }}</th>
+                <td >{{ Candidate.ContactNo }}</td>
+                <td>{{ Candidate.email }}</td>
+                <td>{{ Candidate.dateOfBirth}}</td>
+                <td>{{ Candidate.gender }}</td>
+                <td>{{ Candidate.idProofName }}</td>
+                <td>{{ Candidate.idProofNo }}</td>
+                <td>{{ Candidate.inputCity }}</td>
+                <td>{{ Candidate.inputCity }}</td>
+                <td>{{ Candidate.state }}</td>
+                <td>{{ Candidate.zip }}</td>
+                <td>{{ Candidate.country }}</td>
+                <td>{{ Candidate.photograph }}</td>
+                <td>{{ Candidate.medicalrecord }}</td>
+                <td>{{ Candidate.bankname }}</td>
+                <td>{{ Candidate.bankrecord }}</td>
+                <td>{{ Candidate.accountholdername }}</td>
+                <td>{{ Candidate.accountno }}</td>
+                <td>{{ Candidate.ifsccode }}</td>
+                <td>{{ Candidate.purpose }}</td>
+                <td>{{ Candidate.LoanAmount }}</td>
+                <td>{{ Candidate.RateofInt }}</td>
+                <td>{{ Candidate.Dateofsaction }}</td>
+                <td>{{ Candidate.Security }}</td>
+                <td>{{ Candidate.NoofInstalment }}</td>
+                <td>{{ Candidate.EMIlimit }}</td>
+                <td>{{ Candidate.NoofFamilymembers }}</td>
+                <td>{{ Candidate.MonthlyFamilyEarnings }}</td>
+                <td>{{ Candidate.dateOfReg }}</td>
+                <td>{{ Candidate.Status }}</td>
+                <td>{{ Candidate.Authorised_by }}</td>
+                <td>{{ Candidate.Candidate_ID }}</td>
+                <td>{{ Candidate.Offer_ID }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

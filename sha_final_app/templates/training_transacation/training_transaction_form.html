@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb pl-5">
+        <li class="breadcrumb-item"><a href="{% url 'training_transaction_form' %}">Create New Entry</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'view_query_trainingtrans' %}">View Transaction Details</a></li>
+    </ol>
+</nav>
+
+<div class="container py-3 mt-5" style="background-color:#2196f3   ; border-radius: 25px 25px 0px 0px; color: white;">
+    <h2 class="pl-5 pt-2">Training Candidate Transactions</h2>
+</div>
+
+<div class="container p-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+    <h3>Create New Entry</h3>
+    <hr>
+    <form class="needs-validation" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="container">
+            <h4>Enter the details of the candidate:</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Candidate Username:</label>
+                        <select class="form-control" id="sel1" placeholder="Enter Candidate Username.." name="Candidate_name">
+                            {% for canname in cannames %}
+                            <option value="{{canname.canname}}">{{canname.canname}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback">
+                            Please provide a valid Name
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Date of Transaction</label>
+                        <input type="date" class="form-control" id="exampleFormControlInput1" name="Date_of_transaction"
+                            autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid date
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Course ID</label>
+                        <select class="form-control" id="sel1" placeholder="Enter Course Id.." name="Course_ID">
+                            {% for courseid in courseids %}
+                            <option value="{{courseid.Course_ID}}">{{courseid.Course_Name}} ID:{{courseid.Course_ID}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback">
+                            Please provide a valid Course ID
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Course Amount</label>
+                        <input type="number" class="form-control" id="exampleFormControlInput1" name="Course_amount"
+                            placeholder="Enter Course Amount..." autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            Please provide a Course Amount(in Rupees)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Payment Mode</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="Payment_mode" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>Cash</option>
+                            <option>Cheque</option>
+                            <option>Net Banking / NEFT</option>
+                            <option>Bank Transfer</option>
+                            <option>Debit Card</option>
+                            <option>Credit Card</option>
+                            <option>UPI</option>
+                            <option>E-Wallet</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please provide a valid Payment Mode
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Amount Deposited</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="Amount_deposited"
+                            placeholder="Enter Amount Deposited..." autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            Must Deposit Something
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Bank Transaction ID</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="Bank_transaction_id"
+                            autocomplete="off" placeholder="Enter Bank Transaction ID..." required>
+                        <div class="invalid-feedback">
+                            Please provide a valid Bank Transaction ID
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Bank Account Number</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="Bank_account_number"
+                            placeholder="Enter Depositer Account Number..." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Cheque Number</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="Cheque_number"
+                            placeholder="Enter Cheque Number..." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">UPI / E-Wallet ID</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="UPI_Ewallet_id"
+                            placeholder="Enter UPI / E-Wallet ID..." autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Warning Level</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="Warning_level" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>None-Full Payment Cleared</option>
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please provide a valid Warning Level
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Payment Status</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="Payment_status" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>Not Paid</option>
+                            <option>Half Course Fee Paid</option>
+                            <option>Complete Course Fee Paid</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please provide a valid Payment Type
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Reason For Non-Payment (If Any)</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1"
+                            name="Reason_for_nonPayment" placeholder="Enter Reason For Non-Payment..."
+                            autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary btn-block mt-3" value="Insert Record">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success mt-2" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </form>
+</div>
+</div>
+<br><br>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+{% endblock %}

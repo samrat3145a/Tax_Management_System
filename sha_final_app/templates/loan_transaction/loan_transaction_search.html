@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+            <li class="breadcrumb-item"><a href="{% url 'loan_transaction_form' %}">Create New Entry</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'view_query_loantrans' %}">View Transaction Details</a></li>
+        </ol>
+    </nav>
+
+    <div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Loan Transaction</h2>
+    </div>
+    <div class="container p-5 mb-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h3>Search</h3><hr>
+        <form method="GET" action="/loan-transaction/result/">
+            {% csrf_token %}
+            <div class="container" >
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="candidate_name">Loan Candidate Username</label>
+                            <input type="text" class="form-control" id="candidate_name" name="go"placeholder="Enter Loan Candidate name">
+                            <input type="submit" class="btn btn-primary btn-block mt-3" value="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% if aja %}
+        <div class="container p-5 mt-3" style="background-color:#eceff1; border-radius: 25px;">
+            <h3>List of Candidates</h3>
+            <table class="table table-bordered table-hover table-responsive" style="white-space: nowrap;">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Loan Transaction Id</th>
+                    <th scope="col">Loan Candidate Id</th>
+                    <th scope="col">Loan Candidate name</th>
+                    <th scope="col">Date of Transaction</th>
+                    <th scope="col">Amount Deposit</th>
+                    <th scope="col">Principal Amount</th>
+                    <th scope="col">Payment Mode</th>
+                    <th scope="col">Bank Transaction ID</th>
+                    <th scope="col">Bank Account Number</th>
+                    <th scope="col">Cheque Number</th>
+                    <th scope="col">UPI / E-Wallet ID</th>
+                    <th scope="col">Warning Level</th>
+                    <th scope="col">Payment Status</th>
+                    <th scope="col">Reason For Non-Payment</th>
+                    <th scope="col">AUTHORISED BY</th>
+                    <th scope="col">Date Of Entry</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for a in aja %}
+                <tr>
+                    <th scope="row">
+                        <a href="{% url 'loan_trans_delete' a.pk %}"><button class="btn btn-danger btn-sm">Delete</button></a>
+                        <a href="{% url 'update_loan_transaction' a.pk %}"><button class="btn btn-warning btn-sm">Update</button></a>
+                    </th>
+                    <th scope="row">{{a.loan_transaction_id}}</th>
+                    <td>{{a.loan_candidate_details}}</td>
+                    <td>{{a.Loan_Candidate_name}}</td>
+                    <td>{{a.Date_of_transaction}}</td>
+                    <td>{{a.amount_deposit}}</td>
+                    <td>{{a.principal_amount}}</td>
+                    <td>{{a.Payment_mode}}</td>
+                    <td>{{a.Bank_transaction_id}}</td>
+                    <td>{{a.Bank_account_number}}</td>
+                    <td>{{a.Cheque_number}}</td>
+                    <td>{{a.UPI_Ewallet_id}}</td>
+                    <td>{{a.Warning_level}}</td>
+                    <td>{{a.Payment_status}}</td>
+                    <td>{{a.Reason_for_nonPayment}}</td>
+                    <td>{{a.Authorised_by}}</td>
+                    <td>{{a.Date_of_entry}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success mt-2" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endblock %}

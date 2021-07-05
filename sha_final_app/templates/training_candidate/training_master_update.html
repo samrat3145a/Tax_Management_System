@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!--    Navs Start     -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb pl-5">
+        <li class="breadcrumb-item"><a href="{% url 'training_candidate_master' %}">Create New Entry</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'view_query_candidate_master' %}">View Candidates</a></li>
+    </ol>
+</nav>
+<!--    Navs End     -->
+<div class="main">
+    <!-- Create a Form -->
+    <div class="container">
+        
+        <div class="container py-3  mt-5"
+            style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+            <h2 class="pl-5 pt-2">Training Candidate Master: Update Data </h2>
+        </div>
+
+        <div class="container p-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+
+            <form method="POST">
+                
+                <h5>Entry the data you wish to update.....</h5>
+                
+                <!-- Security token by Django -->
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form }}
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-warning btn-block mt-3" value="Update Entry">
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'view_query_candidate_master' %}" style="text-decoration: none;">
+                            <button class="btn btn-secondary btn-block mt-3  my-3">
+                                Back to View Candidate
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Warning! Changes made here are permanent!
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                </div>
+            </form>
+            
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

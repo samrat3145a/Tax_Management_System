@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content%}
+<style>
+        body{
+       background-color: #63d471;
+background-image: linear-gradient(315deg, #63d471 0%, #233329 74%);
+
+        color:white;
+    }
+    .login{
+
+        padding-top: 10px;
+        font-size: 1.2rem;
+      }
+</style>
+<head>
+    <title>Login</title>
+</head>
+<div class="container" >
+    <br>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+
+    {% endfor %}
+    {% endif %}
+
+    <div class="login" style="padding-top: 20px; font-family: 'Baloo Bhai 2', cursive; ">
+        <br>
+
+        <h1><b>LOGIN</b></h1><br>
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            <label for="id_username">USERNAME</label><br>
+            <input type="Username" name="username" id="id_username" required><br><br>
+            <label for="id_password"  >PASSWORD</label><br>
+            <input type="password" name="password" id="id_password" required><br>
+            <br><input type="submit" class="btn btn-primary">
+
+        </form>
+    </div>
+</div>
+{% endblock %}

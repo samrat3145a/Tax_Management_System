@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+            <li class="breadcrumb-item"><a href="{% url 'offer_master_new' %}">Create Offer</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'view_query_offer' %}">View Offer</a></li>
+        </ol>
+    </nav>
+    <!--    Navs End     -->
+
+    <div class="container py-3 mt-5" style="background-color:#2196f3; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Offer Master</h2>
+    </div>
+
+    <div class="container p-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h3>Create New Entry</h3>
+        <hr>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="container">
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-md-5">
+                        <label for="offer_id"> Offer ID</label>
+                        <input type="number" class="form-control" readonly id="offer_id" placeholder="Generated Offer ID:  {{ count }}">
+
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="offer_name"> Offer Name</label>
+                        <input type="text" class="form-control" id="offer_name" name="offer_name" placeholder="Enter the offer name...">
+                    </div>
+
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-md-5">
+                        <label for="start_date">Start Date</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date">
+                    </div>
+
+                    <div class="form-group col-md-5">
+                        <label for="end_date">End Date</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date">
+                    </div>
+
+                </div>
+                <div class="form-row justify-content-center">
+
+                    <div class="form-group col-md-5">
+                        <label for="Date_of_entry">Date of Entry</label>
+                        <input type="date" class="form-control" id="date_of_entry" name="date_of_entry">
+                    </div>
+
+
+                    <div class="form-group col-md-5">
+                        <p> <label for="employee_id">Employee ID</label>
+                            <select id="employee_id" name="employee_id" class="form-control">
+                                {% for m in match_id %}
+                                <option value="{{ m.id }}">SHA00{{ m.id }}-{{ m.employee_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-md-5">
+                        <label for="inputDISCOUNT">Discount</label>
+                        <select id="inputDISCOUNT" class="form-control" name="discount">
+                            <option selected>10%</option>
+                            <option>20%</option>
+                            <option>30%</option>
+                            <option>40%</option>
+                            <option>50%</option>
+                            <option>60%</option>
+                            <option>70%</option>
+                            <option>75%</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="remarks">Remarks</label>
+                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="Enter the remarks...">
+                    </div>
+                </div>
+                <div><p></p></div>
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-sm2 mt-md-2">
+                        <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+                    </div>
+                    <div class="form-group col-sm2 mt-md-2">
+                        <input class="btn btn-primary btn-lg" type="reset" value="Reset">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div style="text-align:center;">
+            {% if messages %}
+            {% for message in messages %}
+            <h3 style="color:green;">{{message}}</h3>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+<br><br>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+{% endblock %}

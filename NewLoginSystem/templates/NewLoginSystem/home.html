@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content%}
+<style>
+    body{
+    background-color: #a4508b;
+    background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);
+    color:white;
+
+    }
+     .container{
+      padding-top: 34px;
+      font-family: 'Baloo Bhai 2', cursive;
+      font-size:1.2rem;
+    }
+</style>
+<head>
+    <title>Home</title>
+</head>
+<div class=".col-6">
+    <br>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% if not user.is_authenticated %}
+    <h1>Welcome to HomePage</h1><br>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <!--    {{ user.username }}-->
+    <h1><strong>User Details</strong></h1><br>
+    <p>{% for i in data %}</p>
+    <p>{% if i.user_name == user.username %}</p>
+    <p>Employee ID: SHA00{{ i.id }}</p>
+    <p>Username: {{ i.user_name }}</p>
+    <p>Contact No: {{ i.contact_no }}</p>
+    <p>Email Id: {{ i.email_id }}</p>
+    <p>Employee Name: {{ i.employee_name }}</p>
+    <p>Last Qualification: {{ i.last_qualification }}</p>
+    <p>Salary: {{ i.salary }}</p>
+    <p>Id Proof Name: {{ i.id_proof_name}}</p>
+    <p>Id Proof No:{{ i.id_proof_no }}</p>
+    <p>Address: {{ i.address }}</p>
+    <p>State: {{ i.state }}</p>
+    <p>Destination: {{ i.designation }}</p>
+    <p>Profile Pic: {{ i.profile_pic }}</p>
+    <p>Country: {{ i.country }}</p>
+    <p>Date of birth: {{ i.date_of_birth }}</p>
+    <p>Date of Registration: {{ i.date_of_registration }}</p>
+    <p>Time of Registration: {{ i.time_of_registration }}</p>
+    <p>Status: {{ i.status }}</p>
+
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+{% block content %}
+<!--    Navs Start     -->
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+            <li class="breadcrumb-item"><a href="{% url 'loan_candidate_master' %}">Create New Entry</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'loan_view_query_candidate_master' %}">View Candidates</a></li>
+        </ol>
+    </nav>
+    <!--    Navs End     -->
+
+    <div class="container py-3 mt-5" style="background-color:#2196f3; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Loan Master</h2>
+    </div>
+
+    <div class="container p-5 mb-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h3>Create New Entry</h3>
+        <hr>
+
+        <form enctype="multipart/form-data" class="needs-validation" method="POST" novalidate>
+            {% csrf_token %}
+
+            <div class="row mt-Training Candidate Transactions4">
+                <div class="col-md-12"><label for="Candidate_ID">Candidate ID:</label>
+                    <select class="form-control" id="Candidate_ID" name="Candidate_ID"
+                            required>
+                        <option value="">None</option>
+                        {% for canid in canids %}
+                        <option value="{{canid.Candidate_ID}}">
+                            ID:{{canid.Candidate_ID}} -- {{ canid.Candidate_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">
+                        Please provide correct candidate information
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-md-3"><label for="Candidate_Name">Candidate Name </label><input type="text"
+                                                                                                class="form-control" placeholder="Enter Candidate Name" name="canname" id="Candidate_Name"
+                                                                                                required />
+
+                    <div class="invalid-feedback">Please enter a username</div>
+                </div>
+
+
+                <div class="col-md-3"><label for="Contact_No">Contact No </label><input type="text" class="form-control"
+                                                                                        placeholder="Enter Contact No" name="ContactNo" id="Contact_No" required />
+                    <div class="invalid-feedback">Please enter a contact no.</div>
+                </div>
+
+
+                <div class="col-md-3"><label for="Email_id">Email </label><input type="text" class="form-control"
+                                                                                 placeholder="Enter Candidate Email" name="email" id="Email_id" required />
+                    <div class="invalid-feedback">Please enter a E-mail.</div>
+                </div>
+
+
+                <div class="col-md-3"><label for="Date_of_Birth">Date of Birth </label><input class="form-control"
+                                                                                              id="Date_of_Birth" type="date" name="dateOfBirth" placeholder="Enter the DOB..." required>
+                    <div class="invalid-feedback">Please choose a DOB.</div>
+                </div>
+
+            </div>
+
+
+            <div class="row mt-4">
+
+
+                <div class="col-md-3">
+                    <label for="Gender">Gender </label>
+                    <select class="form-control" name="gender" id="Gender" required>
+                        <option value="">None</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="invalid-feedback">Please choose a Gender.</div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <label for="idOccupation">Occupation </label>
+                    <input type="text" class="form-control" name="Occupation" id="idOccupation"
+                           placeholder="Enter Occupation..." required>
+                    <div class="invalid-feedback">Please enter a Occupation.</div>
+                </div>
+
+
+                <div class="col-md-3"><label for="Id_Proof_Name">Id Proof Name </label><input type="text"
+                                                                                              class="form-control" placeholder="Enter Id Proof Name..." name="idProofName" id="Id_Proof_Name"
+                                                                                              required />
+                    <div class="invalid-feedback">Please enter a Id Proof Name.</div>
+                </div>
+
+
+                <div class="col-md-3"><label for="id_Proof_No">Id Proof No </label>
+                    <input type="text" class="form-control" placeholder="Enter Id Proof No..." name="idProofNo"
+                           id="id_Proof_No" required />
+                    <div class="invalid-feedback">Please enter a Id Proof No.</div>
+                </div>
+
+            </div>
+            <div class="row mt-4">
+
+                <div class="col-md-3">
+                    <label for="inputCity">City </label>
+                    <input type="text" class="form-control" name="inputCity" id="inputCity" placeholder="Enter City..."
+                           required>
+                    <div class="invalid-feedback">Please enter City.</div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <label for="inputState" class="me">State </label>
+                    <select class="form-control" name="state" id="inputState" required>
+                        <option value="">None</option>
+                        <option value="West Bengal">West Bengal</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    </select>
+                    <div class="invalid-feedback">Please select State.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="inputZip">Zip:</label>
+                    <input type="text" class="form-control" id="inputZip" name="zip" placeholder="Zip" required>
+                    <div class="invalid-feedback">Please enter Zip code.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="inputcountry">Country </label>
+                    <select class="form-control" name="country" id="inputcountry" required>
+                        <option value="">None</option>
+                        <option value="India">India</option>
+                        <option value="@@">@@</option>
+                        <option value="@@">@@</option>
+                    </select>
+                    <div class="invalid-feedback">Please select Country.</div>
+                </div>
+
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-md-3">
+                    <label for="photograph_id">Photograph </label>
+                    <input type="file" accept="image/*" class="form-control" name="photograph" id="photograph_id"
+                           required>
+                    <div class="invalid-feedback">Please upload photograph.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="medicalrecord_id">Medical Record </label>
+                    <input type="file" accept="image/*" class="form-control" name="medicalrecord" id="medicalrecord_id"
+                           required>
+                    <div class="invalid-feedback">Please upload Medical Record.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="bankname">Bank Name </label>
+                    <input type="text" class="form-control" name="bankname" id="bankname" placeholder="Bank Name"
+                           required>
+
+                    <div class="invalid-feedback">Please enter Bank Name.</div>
+                </div>
+                <div class="col-md-3">
+                    <label for="bankrecord">Bank Record </label>
+                    <input type="file" class="form-control" name="bankrecord" id="bankrecord" required>
+                </div>
+                <div class="invalid-feedback">Please Upload Bank Record.</div>
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-md-4">
+                    <label for="idaccountholdername">Account Holder Name </label>
+                    <input type="text" name="accountholdername" class="form-control" id="idaccountholdername"
+                           placeholder="Account Holder Name" required>
+                    <div class="invalid-feedback">Please enter Account Holder Name.</div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <label for="accountno">Bank Account Number </label>
+                    <input type="text" class="form-control" name="accountno" id="accountno" placeholder="Account Number"
+                           required>
+                    <div class="invalid-feedback">Please enter Account Number.</div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <label for="ifsccode">Ifsc Code </label>
+                    <input type="text" class="form-control" name="ifsccode" id="ifsccode" placeholder="Ifsc Code"
+                           required>
+                    <div class="invalid-feedback">Please enter Ifsc Code.</div>
+                </div>
+
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-md-5">
+                    <label for="idPurpose">Purpose </label>
+                    <textarea name="purpose" class="form-control" id="idPurpose" rows="5" placeholder="Purpose"
+                              required></textarea>
+                    <div class="invalid-feedback">Please enter Loan Purpose.</div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="idLoanAmount">Loan Amount </label>
+                    <input type="text" name="LoanAmount" class="form-control" id="idLoanAmount"
+                           placeholder="Loan Amount" required>
+                    <div class="invalid-feedback">Please enter Loan Amount.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="idRateofInt" class="me">Interest(%) </label>
+                    <input type="number" min="1" name="RateofInt" class="form-control" id="idRateofInt"
+                           placeholder="min 1" required>
+                    <div class="invalid-feedback">Please enter Interest rate.</div>
+                </div>
+
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-md-3">
+                    <label for="idOfferID">Loan Offer </label>
+                    <select class="form-control" id="idOfferID" name="Offer_ID" required>
+                        <option value="None">None</option>
+                        {% for offer in loan_offers %}
+                        <option value="{{offer.offer_id}}">Offer Name : {{offer.offer_name}}({{offer.offer_id}})
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">Please enter Offer Id.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="idDateofsanction">Date Of Sanction </label>
+                    <input type="date" name="Dateofsaction" class="form-control" id="idDateofsanction" required>
+                    <div class="invalid-feedback">Date Of Sanction.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="idDateofDisbursement">Date Of Disbursment </label>
+                    <input type="date" class="form-control" name="Dateofdisbursment" id="idDateofDisbursement" required>
+                    <div class="invalid-feedback">Please enter Date Of Disbursment.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="idSecurity">Security </label>
+                    <input type="file" class="form-control" name="Security" id="idSecurity" required>
+                    <div class="invalid-feedback">Please enter Security.</div>
+                </div>
+
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-md-3">
+                    <label for="idNoofInstalment" class="me">No Of Installment </label>
+                    <input type="number" class="form-control" name="NoofInstalment" id="idNoofInstalment" min="1"
+                           max="6" placeholder="max 6" required>
+                    <div class="invalid-feedback">Please enter No Of Installment.</div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <label for="idEMIlimit" class="me">Emi Limit</label>
+                    <input type="text" class="form-control" name="EMIlimit" id="idEMIlimit" placeholder="Emi Limit"
+                           required>
+                    <div class="invalid-feedback">Please enter Emi Limit.</div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <label for="idNoofFamilymembers" class="me">Family Members</label>
+                    <input type="number" class="form-control" name="NoofFamilymembers" id="idNoofFamilymembers"
+                           placeholder="Family Members" required>
+                    <div class="invalid-feedback">Please enter Family Members.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="idMonthlyFamilyEarnings" class="me">Total Family Income</label>
+                    <input type="text" class="form-control" name="MonthlyFamilyEarnings" id="idMonthlyFamilyEarnings"
+                           placeholder="Total Family Income" required>
+                    <div class="invalid-feedback">Please enter Total Family Income.</div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+            </div>
+
+            <div class="row mt-4 ">
+
+                <div class="col-md-4"><label for="Status">Status: </label><input type="text" class="form-control"
+                                                                                 placeholder="Enter Status..." id="Status" name="Status" required />
+                    <div class="invalid-feedback">Please enter a Status.</div>
+                </div>
+
+                <div class="col-md-4"><label for="date_Of_Reg">Date of Registration </label>
+                    <input class="form-control" id="date_Of_Reg" type="date" name="dateOfReg"
+                           placeholder="Enter the Registration..." required>
+                    <div class="invalid-feedback">Please choose a Date Of Reg.</div>
+                </div>
+
+                <div class="col-md-4"><label for="AUTHORISED_BY">AUTHORISED BY </label>
+                    <select class="form-control" id="AUTHORISED_BY" name="Authorised_by">
+                        {% for person in authorised_by %}
+                        <option value="{{person.email_id}}">authorised_by : {{person.employee_name}}({{person.id}})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info mt-2" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <br><br>
+            <div class="form-row justify-content-center">
+                <div class="form-group col-sm2 mt-md-2">
+                    <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+                </div>
+                <div class="form-group col-sm2 mt-md-2">
+                    <input class="btn btn-primary btn-lg" type="reset" value="Reset">
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+<br><br>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+<script>
+    function show_alert() {
+        alert("click ok to submit");
+    }
+</script>
+{% endblock %}

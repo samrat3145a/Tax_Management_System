@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content%}
+<style>
+ small{
+      color: white;
+    }
+    body{
+      height: 100%;
+      background-image: linear-gradient(326deg, #000000 0%, #ce203c 74%);
+        color:white;
+    }
+    .container{
+      padding-top: 34px;
+      font-family: 'Baloo Bhai 2', cursive;
+      font-size:1.2rem;
+    }
+</style>
+<head>
+    <title>Registration</title>
+</head>
+<div class="container">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+
+    {% endfor %}
+    {% endif %}
+
+    <div class="col-6">
+        <h1><Strong>SIGN UP</Strong></h1><br>
+        <form  action="{% url 'signup'%}" method="POST">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p>Your form has Error!</p>
+                {% for field in form %}
+                {% if field.errors %}
+                {{ field.errors }}
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            {% endif %}
+
+            {{ form.as_p }}
+            <p>EMPLOYEE ID : SHA00{{ count }}</p>
+            <label for="id_first_name">EMPLOYEE NAME</label>
+            <p> <input type="text" name="first_name" class="form-control" placeholder="Employee Name" required id="id_first_name"></p>
+            <label for="id_email",required="None">EMAIL ID</label>
+            <p> <input type="text" name="email" class="form-control" placeholder="Email Address" required id="id_email"></p>
+            <label for="id_contact">CONTACT NO</label>
+            <p> <input type="number" name="ContactNo" class="form-control" placeholder="Contact No" required id="id_contact" maxlength="10"></p>
+            <label for="id_designation">DESIGNATION:</label>
+            <select id="id_designation" name="DESIGNATION">
+                <option value="Manager">Manager</option>
+                <option value="Employee">Employee</option>
+                <option value="Other">Other</option>
+            </select></p>
+            <label for="id_last_qualification">LAST QUALIFICATION</label>
+            <p> <input type="text" name="Last_qualification" class="form-control" placeholder="Last Qualification" required id="id_last_qualification"></p>
+            <label for="id_salary">SALARY</label>
+            <p> <input type="number" name="Salary" class="form-control" placeholder="Salary" required id="id_salary"></p>
+            <p> <label for="Gender">Gender</label>
+                <select id="Gender"name="Gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select></p>
+            <label for="id_proof_no">ID PROOF NAME</label>
+            <p> <input type="text" name="Id_proof_name" class="form-control" placeholder="ID Proof Name" required id="id_proof_no"></p>
+            <label for="id_proof_name">ID PROOF NO</label>
+            <p> <input type="number" name="Id_proof_no" class="form-control" placeholder="ID Proof No" required id="id_proof_name"></p>
+            <label for="id_address">ADDRESS</label>
+            <p> <input type="text" name="Address" class="form-control" placeholder="Address" required id="id_address"></p>
+            <label for="id_state">STATE</label>
+            <p> <input type="text" name="State" class="form-control" placeholder="State" required id="id_state"></p>
+            <label for="id_country">COUNTRY</label>
+            <p> <input type="text" name="Country" class="form-control" placeholder="Country" required id="id_country"></p>
+            <label for="id_pincode">PINCODE</label>
+            <p> <input type="number" name="Pincode" class="form-control" placeholder="Pincode" required id="id_pincode"></p>
+            <label for="id_profile_picture">PROFILE PICTURE</label>
+            <p><input type="file" name="pic" accept="image/*" style="padding-bottom: 10px;font-size: 1.0rem" required id="id_profile_picture"><small>Choose the profile picture</small></p>
+            <label for="id_dob">DATE OF BIRTH</label>
+            <p> <input type="date" name="DOB" class="form-control" placeholder="Date of birth" required id="id_dob"></p>
+            <label for="id_status">STATUS</label>
+            <p> <input type="text" name="Status" class="form-control" placeholder="Status" required id="id_status"></p>
+
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <button type="submit" class="btn btn-secondary" >Submit</button>
+                </div>
+                <div class="form-group col-md-2">
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}

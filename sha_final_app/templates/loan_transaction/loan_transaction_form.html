@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+            <li class="breadcrumb-item"><a href="{% url 'loan_transaction_form' %}">Create New Entry</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'view_query_loantrans' %}">View Transaction Details</a></li>
+        </ol>
+    </nav>
+    <div class="container py-3 mt-5" style="background-color:#2196f3; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Candidate Transactions</h2>
+    </div>
+
+    <div class="container p-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h3>Create New Entry</h3>
+        <hr>
+        <form class="needs-validation" method="POST" novalidate>
+            {% csrf_token %}
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Loan_Candidate_details">Loan Candidate details</label>
+                    <select class="form-control" id="Loan_Candidate_details" placeholder="Enter Candidate Username.."
+                            name="loan_candidate_details" required>
+                        <option value="">None</option>
+                        {% for loancan in cannames %}
+                        <option value="{{loancan.Loan_ID}}">
+                            {{loancan.canname}}-----({{loancan.email}})-----{{loancan.LoanAmount}} rs</option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">
+                        Please provide correct loan candidate information
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <label for="Loan_Candidate_name">Loan Candidate name (same as Loan Candidate details)</label>
+                        <select class="form-control" id="Loan_Candidate_name"
+                                name="Loan_Candidate_name" required>
+                            <option value="">None</option>
+                            {% for loancan in cannames %}
+                            <option value="{{loancan.canname}}">
+                                {{loancan.canname}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback">
+                            Please provide a valid Name
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Date_of_Transaction">Date of Transaction</label>
+                            <input type="date" class="form-control" id="Date_of_Transaction" name="Date_of_transaction"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                Please provide a date of transaction
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <label for="amount_deposit">Amount Deposit</label>
+                        <input type="text" name="amount_deposit" class="form-control" id="amount_deposit"
+                               placeholder="Amount Deposit" required>
+                        <div class="invalid-feedback">
+                            Please enter "NO",if no amount diposited
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="principal_amount">Principal Amount</label>
+                        <input type="text" name="principal_amount" class="form-control" id="principal_amount"
+                               placeholder="Principal Amount" required>
+                        <div class="invalid-feedback">
+                            Please enter principal amount
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Payment_Mode">Payment Mode</label>
+                            <select class="form-control" id="Payment_Mode" name="Payment_mode" required>
+                                <option value="">None</option>
+                                <option>Cash</option>
+                                <option>Cheque</option>
+                                <option>Net Banking / NEFT</option>
+                                <option>Bank Transfer</option>
+                                <option>Debit Card</option>
+                                <option>Credit Card</option>
+                                <option>UPI</option>
+                                <option>E-Wallet</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide a valid Payment Mode
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Bank_Transaction_ID">Bank Transaction ID</label>
+                            <input type="text" class="form-control" id="Bank_Transaction_ID" name="Bank_transaction_id"
+                                   autocomplete="off" placeholder="Enter Bank Transaction ID" required>
+                            <div class="invalid-feedback">
+                                type 'N' if not have
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Bank_Account_Number">Bank Account Number</label>
+                            <input type="text" class="form-control" id="Bank_Account_Number" name="Bank_account_number"
+                                   placeholder="Enter Depositer Account Number" autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                type 'N' if not have
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Cheque_Number">Cheque Number</label>
+                            <input type="text" class="form-control" id="Cheque_Number" name="Cheque_number"
+                                   placeholder="Enter Cheque Number" autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                type 'N' if not have
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="upi_Id">UPI / E-Wallet ID</label>
+                            <input type="text" class="form-control" id="upi_Id" name="UPI_Ewallet_id"
+                                   placeholder="Enter UPI / E-Wallet ID" autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                type 'N' if not have
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Warning_Level">Warning Level</label>
+                            <select class="form-control" id="Warning_Level" name="Warning_level" required>
+                                <option value="">Choose</option>
+                                <option value="None">None(Full Payment Cleared)</option>
+                                <option value="Low">Low(last installment not paid)</option>
+                                <option value="Medium">Medium(more than 1 installment not paid)</option>
+                                <option value="High">High(loan not cleared in fixed time-period)</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide a valid Warning Level
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="Payment_Status">Payment Status</label>
+                            <select class="form-control" id="Payment_Status" name="Payment_status" required>
+                                <option selected disabled value="">Choose</option>
+                                <option value="Not Paid(but have time)">Not Paid(but have time)</option>
+                                <option value="Not_Paid(high warning)">Not Paid(high warning)</option>
+                                <option value="completely_Paid">completely Paid</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide a valid Payment Type
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="Reason">Reason For Non-Payment (If Any)</label>
+                            <textarea class="form-control" id="Reason" name="Reason_for_nonPayment"
+                                      placeholder="Enter Reason For Non-Payment" autocomplete="off" required></textarea>
+                            <div class="invalid-feedback">
+                                type 'N' if not have
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4"><label for="AUTHORISED_BY">AUTHORISED BY </label>
+                        <select class="form-control" id="AUTHORISED_BY" name="Authorised_by">
+                            {% for person in authorised_by %}
+                            <option value="{{person.email_id}}">SHA00{{person.id}}-{{person.employee_name}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row justify-content-center">
+                <div class="form-group col-sm2 mt-md-2">
+                    <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+                </div>
+                <div class="form-group col-sm2 mt-md-2">
+                    <input class="btn btn-primary btn-lg" type="reset" value="Reset">
+                </div>
+            </div>
+
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success mt-2" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+</div>
+<br><br>
+<br><br>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+{% endblock %}

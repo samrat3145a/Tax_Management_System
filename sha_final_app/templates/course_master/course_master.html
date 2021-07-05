@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="tab-content" id="myTabContent">
+    <!--    Navs Start     -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-5">
+            <li class="breadcrumb-item"><a href="{% url 'course_master_new' %}">Create New Course</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'view_query_course' %}">View Courses</a></li>
+        </ol>
+    </nav>
+    <!--    Navs End     -->
+
+    <div class="container py-3 mt-5" style="background-color:#2196f3 ; border-radius: 25px 25px 0px 0px; color: white;">
+        <h2 class="pl-5 pt-2">Courses</h2>
+    </div>
+
+    <div class="container p-5" style="background-color:#eceff1; border-radius: 0px 0px 25px 25px;">
+        <h5>ADD A NEW COURSE</h5>
+
+        <br>
+
+        <form class="needs-validation" method="POST" novalidate>
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col-md-8"><label for="Course_Name">Course Name: </label><input type="text"
+                        class="form-control" placeholder="Enter Course Name..." name="Course_Name" required />
+                    <div class="invalid-feedback">Please enter a Course Name</div>
+                </div>
+                <div class="col-md-4"><label for="Fees">Course Fees: </label><input type="text" class="form-control"
+                        placeholder="Enter Course Fees..." name="Fees" required />
+                    <div class="invalid-feedback">Please enter Course Fees</div>
+                </div>
+            </div>
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info mt-2" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <input type="submit" class="btn btn-primary btn-block mt-3" value="Insert Record">
+
+
+        </form>
+    </div>
+</div>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="tab-content mt-3" id="myTabContent">
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <div class="alert alert-danger p-5">
+                <h4 class="alert-heading">Delete Entry ?</h4>
+                <p>Are you sure you want to delete Candidate Details of {{ object.Candidate_name }}.</p>
+                <button type="submit" class="btn btn-danger btn-block my-1">
+                    Confirm Delete
+                </button>
+                <hr>
+                <p class="mb-0">This action can't be undone</p>
+            </div>
+        </form>
+
+        <a href="{% url 'view_query_callmast' %}" style="text-decoration: none;">
+            <button class="btn btn-secondary btn-block">
+                Back to search Calling Details
+            </button>
+        </a>
+    </div>
+</div>
+{% endblock %}
